@@ -1,0 +1,39 @@
+{
+  "name": "bs-react-select",
+  "version": "1.0.0",
+  "description": "Reason bindings for react-select",
+  "author": "ahrefs",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahrefs/bs-react-select.git"
+  },
+  "homepage": "https://github.com/ahrefs/bs-react-select#readme",
+  "bugs": {
+    "url": "https://github.com/ahrefs/bs-react-select/issues"
+  },
+  "keywords": [
+    "react",
+    "reason-react",
+    "reason",
+    "reasonml",
+    "bucklescript",
+    "select",
+    "react-select"
+  ],
+  "scripts": {
+    "prestart": "npm install && bsb -clean-world",
+    "start": "npm run bs:watch",
+    "test": "npm run bs:build",
+    "bs:build": "bsb -make-world -clean-world",
+    "bs:watch": "bsb -make-world -clean-world -w",
+    "bs:setup": "bsb -make-world"
+  },
+  "dependencies": {
+    "react": "^16.2.0",
+    "react-select": "^1.2.1"
+  },
+  "devDependencies": {
+    "reason-react": "^0.3.2"
+  }
+}

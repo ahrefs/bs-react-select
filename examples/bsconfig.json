@@ -1,0 +1,10 @@
+{
+  "name": "bs-react-select-examples",
+  "sources": ["src"],
+  "bs-dependencies": ["reason-react", "bs-jest", "bs-react-select"],
+  "reason": {
+    "react-jsx": 2
+  },
+  "bsc-flags": ["-bs-super-errors"],
+  "refmt": 3
+}
