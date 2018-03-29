@@ -1,4 +1,4 @@
-# Reason bindings for react-dnd
+# Reason bindings for react-select
 
 [Reason](https://reasonml.github.io/) bindings for [react-select](https://github.com/JedWatson/react-select).
 
