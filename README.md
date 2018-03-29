@@ -23,9 +23,17 @@ Then add `bs-react-select` to `bs-dependencies` in your `bsconfig.json`:
 }
 ```
 
+To include styles
+
+```js
+[%bs.raw {|require('react-select/dist/react-select.css')|}];
+```
+
 ## TODO
 
-* [ ]
+* [ ] "filterOptions" - try to annotate with GADT
+* [ ] "resetValue" - any: string|'a|array('a)
+* [ ] "value" - any: string|'a|array('a)
 
 ## Usage
 
