@@ -31,9 +31,9 @@ To include styles
 
 ## TODO
 
-* [ ] "filterOptions" - try to annotate with GADT
-* [ ] "resetValue" - any: string|'a|array('a)
-* [ ] "value" - any: string|'a|array('a)
+* [ ] `filterOptions` - bool | func
+* [ ] `resetValue` / `value` - string | 'a | array('a)
+* [ ] `aria-describedby` / `aria-label` / `aria-labelledby` SpecialCreationFunction doesn't allow to change prop name, hopefully this will be possible in the next bucklescript releases
 
 ## Usage
 

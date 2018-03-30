@@ -1,13 +1,7 @@
 let fromOpt = Js.Nullable.fromOption;
 
-let optBoolToOptBoolean = (var: option(bool)) =>
-  Js.Option.map((. b) => Js.Boolean.to_js_boolean(b), var);
-
-[@bs.deriving jsConverter]
-type matchPos = [ | `any | `start];
-
-[@bs.deriving jsConverter]
-type matchProp = [ | `any | `label | `value];
+let optBoolToOptBoolean = v =>
+  Js.(Option.map((. b) => Boolean.to_js_boolean(b), v));
 
 type arrowRendererProps = {
   .
@@ -24,46 +18,21 @@ type menuRendererProps('a) = {
   "valueArray": array('a),
 };
 
-module StringOrNode = {
-  type t =
-    | Node(ReasonReact.reactElement)
-    | String(string);
-  external fromNode : ReasonReact.reactElement => t = "%identity";
-  external fromString : string => t = "%identity";
-  let encode = (v: t) =>
-    switch (v) {
-    | Node(a) => fromNode(a)
-    | String(a) => fromString(a)
-    };
-  let encodeOpt = (v: option(t)) => Js.Option.map((. a) => encode(a), v);
-};
+/*
+   This is a hack.
+   `makeProps` returns this is an array, which `react-select` probably consumes as a React node
+ */
+type strOrNode =
+  | Node(ReasonReact.reactElement)
+  | Str(string);
 
-module StringOrNumber = {
-  type t =
-    | Number(int)
-    | String(string);
-  external fromNumber : int => t = "%identity";
-  external fromString : string => t = "%identity";
-  let encode = (v: t) =>
-    switch (v) {
-    | Number(a) => fromNumber(a)
-    | String(a) => fromString(a)
-    };
-  let encodeOpt = (v: option(t)) => Js.Option.map((. a) => encode(a), v);
-};
+type strOrInt =
+  | Int(int)
+  | Str(string);
 
 [@bs.module "react-select"]
 external select : ReasonReact.reactClass = "default";
 
-/* "aria-describedby": ariaDescribedby |> fromOpt,
-   "aria-label": ariaLabel |> fromOpt,
-   "aria-labelledby": ariaLabelledby |> fromOpt, */
-/* ~ariaDescribedby: string=?,  HTML ID(s) of element(s) that should be used to describe this input (for assistive tech) */
-/* ~ariaLabel: string=?,  Aria label (for assistive tech) */
-/* ~ariaLabelledby: string=?,  HTML ID of an element that should be used as the label (for assistive tech) */
-/* ~ariaDescribedby=?,
-   ~ariaLabel=?,
-   ~ariaLabelledby=?, */
 [@bs.obj]
 external makeProps :
   (
@@ -97,15 +66,15 @@ external makeProps :
     ~isLoading: Js.boolean=?, /* whether the Select is loading externally or not (such as options being loaded) */
     ~joinValues: Js.boolean=?, /* join multiple values into a single hidden input using the delimiter */
     ~labelKey: string=?, /* the option property to use for the label */
-    ~matchPos: string=?, /* (any, start) match the start or entire string when filtering */
-    ~matchProp: string=?, /* (any, label, value) which option property to filter on */
+    ~matchPos: [@bs.string] [ | `any | `start]=?, /* (any, start) match the start or entire string when filtering */
+    ~matchProp: [@bs.string] [ | `any | `label | `value]=?, /* (any, label, value) which option property to filter on */
     ~menuBuffer: int=?, /* buffer of px between the base of the dropdown and the viewport to shift if menu doesnt fit in viewport */
     ~menuContainerStyle: ReactDOMRe.Style.t=?, /* optional style to apply to the menu container */
     ~menuRenderer: menuRendererProps('a) => ReasonReact.reactElement=?, /* Renders a custom menu with options; accepts the following named parameters */
     ~menuStyle: ReactDOMRe.Style.t=?, /* optional style to apply to the menu */
     ~multi: Js.boolean=?, /* multi-value input */
     ~name: string=?, /* field name, for hidden <input /> tag */
-    ~noResultsText: StringOrNode.t=?, /* placeholder displayed when there are no matching search results or a falsy value to hide it */
+    ~noResultsText: strOrNode=?, /* placeholder displayed when there are no matching search results or a falsy value to hide it */
     ~onBlur: Js.t({..}) => unit=?, /* onBlur handler: function(event) {} */
     ~onBlurResetsInput: Js.boolean=?, /* Whether to clear input on blur or not. If set to false, it only works if onCloseResetsInput is also false */
     ~onChange: 'a => unit=?, /* onChange handler: function(newOption) {} */
@@ -126,20 +95,20 @@ external makeProps :
     ~options: array('a)=?, /* array of options */
     ~removeSelected: Js.boolean=?, /* whether the selected option is removed from the dropdown on multi selects */
     ~pageSize: int=?, /* number of options to jump when using page up/down keys */
-    ~placeholder: StringOrNode.t=?, /* field placeholder, displayed when there's no value */
+    ~placeholder: strOrNode=?, /* field placeholder, displayed when there's no value */
     ~required: Js.boolean=?, /* applies HTML5 required attribute when needed */
-    /* ~resetValue=?, */
+    ~resetValue: string=?,
     /* value to set when the control is cleared */
     ~rtl: Js.boolean=?, /* use react-select in right-to-left direction */
     ~scrollMenuIntoView: Js.boolean=?, /* whether the viewport will shift to display the entire menu when engaged */
     ~searchable: Js.boolean=?, /* whether to enable searching feature or not */
-    ~searchPromptText: StringOrNode.t=?, /* label to prompt for search input */
+    ~searchPromptText: strOrNode=?, /* label to prompt for search input */
     ~simpleValue: Js.boolean=?, /* pass the value to onChange as a string */
     ~style: ReactDOMRe.Style.t=?, /* optional styles to apply to the control */
-    ~tabIndex: StringOrNumber.t=?, /* tabIndex of the control */
+    ~tabIndex: strOrInt=?, /* tabIndex of the control */
     ~tabSelectsValue: Js.boolean=?, /* whether to select the currently focused value when the [tab] key is pressed */
     ~trimFilter: Js.boolean=?, /* whether to trim whitespace from the filter value */
-    /* ~value=?, */
+    ~value: string=?,
     /* initial field value */
     ~valueComponent: ReasonReact.reactClass=?, /* function which returns a custom way to render/manage the value selected <CustomValue /> */
     ~valueKey: string=?, /* the option property to use for the value */
@@ -171,7 +140,7 @@ let make =
       ~disabled=?,
       ~escapeClearsValue=?,
       ~filterOption=?,
-      ~filterOptions=?,
+      /* ~filterOptions=?, */
       ~id=?,
       ~ignoreAccents=?,
       ~ignoreCase=?,
@@ -262,15 +231,15 @@ let make =
         ~isLoading=?isLoading |> optBoolToOptBoolean,
         ~joinValues=?joinValues |> optBoolToOptBoolean,
         ~labelKey?,
-        ~matchPos=?Js.Option.map((. a) => matchPosToJs(a), matchPos),
-        ~matchProp=?Js.Option.map((. a) => matchPropToJs(a), matchProp),
+        ~matchPos?,
+        ~matchProp?,
         ~menuBuffer?,
         ~menuContainerStyle?,
         ~menuRenderer?,
         ~menuStyle?,
         ~multi=?multi |> optBoolToOptBoolean,
         ~name?,
-        ~noResultsText=?noResultsText |> StringOrNode.encodeOpt,
+        ~noResultsText?,
         ~onBlur?,
         ~onBlurResetsInput=?onBlurResetsInput |> optBoolToOptBoolean,
         ~onChange?,
@@ -291,19 +260,19 @@ let make =
         ~options?,
         ~removeSelected=?removeSelected |> optBoolToOptBoolean,
         ~pageSize?,
-        ~placeholder=?placeholder |> StringOrNode.encodeOpt,
+        ~placeholder?,
         ~required=?required |> optBoolToOptBoolean,
-        /* ~resetValue?, */
+        ~resetValue?,
         ~rtl=?rtl |> optBoolToOptBoolean,
         ~scrollMenuIntoView=?scrollMenuIntoView |> optBoolToOptBoolean,
         ~searchable=?searchable |> optBoolToOptBoolean,
-        ~searchPromptText=?searchPromptText |> StringOrNode.encodeOpt,
+        ~searchPromptText?,
         ~simpleValue=?simpleValue |> optBoolToOptBoolean,
         ~style?,
-        ~tabIndex=?tabIndex |> StringOrNumber.encodeOpt,
+        ~tabIndex?,
         ~tabSelectsValue=?tabSelectsValue |> optBoolToOptBoolean,
         ~trimFilter=?trimFilter |> optBoolToOptBoolean,
-        /* ~value?, */
+        ~value?,
         ~valueComponent?,
         ~valueKey?,
         ~valueRenderer?,
