@@ -1,52 +1,4 @@
-let fromOpt = Js.Nullable.fromOption;
-
-let optBoolToOptBoolean = v =>
-  Js.Option.map((. b) => Js.Boolean.to_js_boolean(b), v);
-
-type arrowRendererProps = {
-  .
-  "onMouseDown": unit => unit,
-  "isOpen": Js.boolean,
-};
-
-type menuRendererProps('a) = {
-  .
-  "focusedOption": 'a,
-  "focusOption": 'a => unit,
-  "options": array('a),
-  "selectValue": 'a => unit,
-  "valueArray": array('a),
-};
-
-module StrOrNode = {
-  type t;
-  type arg =
-    | Str(string)
-    | Node(ReasonReact.reactElement);
-  external fromStr : string => t = "%identity";
-  external fromNode : ReasonReact.reactElement => t = "%identity";
-  let encode = v =>
-    switch (v) {
-    | Str(v) => fromStr(v)
-    | Node(v) => fromNode(v)
-    };
-  let encodeOpt = v => Js.Option.map((. b) => encode(b), v);
-};
-
-module StrOrInt = {
-  type t;
-  type arg =
-    | Str(string)
-    | Int(int);
-  external fromStr : string => t = "%identity";
-  external fromInt : int => t = "%identity";
-  let encode = v =>
-    switch (v) {
-    | Str(v) => fromStr(v)
-    | Int(v) => fromInt(v)
-    };
-  let encodeOpt = v => Js.Option.map((. b) => encode(b), v);
-};
+open Core;
 
 module Option = {
   type t('a);
@@ -85,6 +37,7 @@ external select : ReasonReact.reactClass = "default";
 [@bs.obj]
 external makeProps :
   (
+    ~multi: Js.boolean,
     ~arrowRenderer: arrowRendererProps => ReasonReact.reactElement=?, /* Renders a custom drop-down arrow. Won't render when set to null */
     ~autoBlur: Js.boolean=?, /* Blurs the input element after a selection has been made. Handy for lowering the keyboard on mobile devices */
     ~autofocus: Js.boolean=?, /* deprecated; use the autoFocus prop instead */
@@ -121,7 +74,6 @@ external makeProps :
     ~menuContainerStyle: ReactDOMRe.Style.t=?, /* optional style to apply to the menu container */
     ~menuRenderer: menuRendererProps('a) => ReasonReact.reactElement=?, /* Renders a custom menu with options; accepts the following named parameters */
     ~menuStyle: ReactDOMRe.Style.t=?, /* optional style to apply to the menu */
-    ~multi: Js.boolean=?,
     ~name: string=?, /* field name, for hidden <input /> tag */
     ~noResultsText: StrOrNode.t=?, /* placeholder displayed when there are no matching search results or a falsy value to hide it */
     ~onBlur: Js.t({..}) => unit=?, /* onBlur handler: function(event) {} */
@@ -205,7 +157,6 @@ let make =
       ~menuContainerStyle=?,
       ~menuRenderer=?,
       ~menuStyle=?,
-      ~multi=?,
       ~name=?,
       ~noResultsText=?,
       ~onBlur=?,
@@ -251,6 +202,7 @@ let make =
     ~reactClass=select,
     ~props=
       makeProps(
+        ~multi=Js.false_,
         ~arrowRenderer?,
         ~autoBlur=?autoBlur |> optBoolToOptBoolean,
         ~autofocus=?autofocus |> optBoolToOptBoolean,
@@ -286,7 +238,6 @@ let make =
         ~menuContainerStyle?,
         ~menuRenderer?,
         ~menuStyle?,
-        ~multi=?multi |> optBoolToOptBoolean,
         ~name?,
         ~noResultsText=?noResultsText |> StrOrNode.encodeOpt,
         ~onBlur?,

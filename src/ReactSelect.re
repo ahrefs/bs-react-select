@@ -1,1 +1,3 @@
-let a = 1;
+module Select = Select;
+
+module SelectMulti = SelectMulti;
