@@ -18,17 +18,35 @@ type menuRendererProps('a) = {
   "valueArray": array('a),
 };
 
-/*
-   This is a hack.
-   `makeProps` returns this is an array, which `react-select` probably consumes as a React node
- */
-type strOrNode =
-  | Node(ReasonReact.reactElement)
-  | Str(string);
+module StrOrNode = {
+  type t;
+  type arg =
+    | Str(string)
+    | Node(ReasonReact.reactElement);
+  external fromStr : string => t = "%identity";
+  external fromNode : ReasonReact.reactElement => t = "%identity";
+  let encode = v =>
+    switch (v) {
+    | Str(v) => fromStr(v)
+    | Node(v) => fromNode(v)
+    };
+  let encodeOpt = v => Js.(Option.map((. b) => encode(b), v));
+};
 
-type strOrInt =
-  | Int(int)
-  | Str(string);
+module StrOrInt = {
+  type t;
+  type arg =
+    | Str(string)
+    | Int(int);
+  external fromStr : string => t = "%identity";
+  external fromInt : int => t = "%identity";
+  let encode = v =>
+    switch (v) {
+    | Str(v) => fromStr(v)
+    | Int(v) => fromInt(v)
+    };
+  let encodeOpt = v => Js.(Option.map((. b) => encode(b), v));
+};
 
 [@bs.module "react-select"]
 external select : ReasonReact.reactClass = "default";
@@ -74,7 +92,7 @@ external makeProps :
     ~menuStyle: ReactDOMRe.Style.t=?, /* optional style to apply to the menu */
     ~multi: Js.boolean=?, /* multi-value input */
     ~name: string=?, /* field name, for hidden <input /> tag */
-    ~noResultsText: strOrNode=?, /* placeholder displayed when there are no matching search results or a falsy value to hide it */
+    ~noResultsText: StrOrNode.t=?, /* placeholder displayed when there are no matching search results or a falsy value to hide it */
     ~onBlur: Js.t({..}) => unit=?, /* onBlur handler: function(event) {} */
     ~onBlurResetsInput: Js.boolean=?, /* Whether to clear input on blur or not. If set to false, it only works if onCloseResetsInput is also false */
     ~onChange: 'a => unit=?, /* onChange handler: function(newOption) {} */
@@ -95,17 +113,17 @@ external makeProps :
     ~options: array('a)=?, /* array of options */
     ~removeSelected: Js.boolean=?, /* whether the selected option is removed from the dropdown on multi selects */
     ~pageSize: int=?, /* number of options to jump when using page up/down keys */
-    ~placeholder: strOrNode=?, /* field placeholder, displayed when there's no value */
+    ~placeholder: StrOrNode.t=?, /* field placeholder, displayed when there's no value */
     ~required: Js.boolean=?, /* applies HTML5 required attribute when needed */
     ~resetValue: string=?,
     /* value to set when the control is cleared */
     ~rtl: Js.boolean=?, /* use react-select in right-to-left direction */
     ~scrollMenuIntoView: Js.boolean=?, /* whether the viewport will shift to display the entire menu when engaged */
     ~searchable: Js.boolean=?, /* whether to enable searching feature or not */
-    ~searchPromptText: strOrNode=?, /* label to prompt for search input */
+    ~searchPromptText: StrOrNode.t=?, /* label to prompt for search input */
     ~simpleValue: Js.boolean=?, /* pass the value to onChange as a string */
     ~style: ReactDOMRe.Style.t=?, /* optional styles to apply to the control */
-    ~tabIndex: strOrInt=?, /* tabIndex of the control */
+    ~tabIndex: StrOrInt.t=?, /* tabIndex of the control */
     ~tabSelectsValue: Js.boolean=?, /* whether to select the currently focused value when the [tab] key is pressed */
     ~trimFilter: Js.boolean=?, /* whether to trim whitespace from the filter value */
     ~value: string=?,
@@ -239,7 +257,7 @@ let make =
         ~menuStyle?,
         ~multi=?multi |> optBoolToOptBoolean,
         ~name?,
-        ~noResultsText?,
+        ~noResultsText=?noResultsText |> StrOrNode.encodeOpt,
         ~onBlur?,
         ~onBlurResetsInput=?onBlurResetsInput |> optBoolToOptBoolean,
         ~onChange?,
@@ -260,16 +278,16 @@ let make =
         ~options?,
         ~removeSelected=?removeSelected |> optBoolToOptBoolean,
         ~pageSize?,
-        ~placeholder?,
+        ~placeholder=?placeholder |> StrOrNode.encodeOpt,
         ~required=?required |> optBoolToOptBoolean,
         ~resetValue?,
         ~rtl=?rtl |> optBoolToOptBoolean,
         ~scrollMenuIntoView=?scrollMenuIntoView |> optBoolToOptBoolean,
         ~searchable=?searchable |> optBoolToOptBoolean,
-        ~searchPromptText?,
+        ~searchPromptText=?searchPromptText |> StrOrNode.encodeOpt,
         ~simpleValue=?simpleValue |> optBoolToOptBoolean,
         ~style?,
-        ~tabIndex?,
+        ~tabIndex=?tabIndex |> StrOrInt.encodeOpt,
         ~tabSelectsValue=?tabSelectsValue |> optBoolToOptBoolean,
         ~trimFilter=?trimFilter |> optBoolToOptBoolean,
         ~value?,

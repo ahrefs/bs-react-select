@@ -33,6 +33,7 @@ let make = _children => {
         arrowRenderer=(
           (_) => <div> (ReasonReact.stringToElement("+")) </div>
         )
+        placeholder=(Str("Select something.."))
         resetValue="three"
         options=[|
           {"value": "one", "label": "One"},
