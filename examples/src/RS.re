@@ -1,7 +1,7 @@
 let fromOpt = Js.Nullable.fromOption;
 
 let optBoolToOptBoolean = v =>
-  Js.(Option.map((. b) => Boolean.to_js_boolean(b), v));
+  Js.Option.map((. b) => Js.Boolean.to_js_boolean(b), v);
 
 type arrowRendererProps = {
   .
@@ -30,7 +30,7 @@ module StrOrNode = {
     | Str(v) => fromStr(v)
     | Node(v) => fromNode(v)
     };
-  let encodeOpt = v => Js.(Option.map((. b) => encode(b), v));
+  let encodeOpt = v => Js.Option.map((. b) => encode(b), v);
 };
 
 module StrOrInt = {
@@ -45,7 +45,22 @@ module StrOrInt = {
     | Str(v) => fromStr(v)
     | Int(v) => fromInt(v)
     };
-  let encodeOpt = v => Js.(Option.map((. b) => encode(b), v));
+  let encodeOpt = v => Js.Option.map((. b) => encode(b), v);
+};
+
+module Option = {
+  type t('a);
+  type arg('a) =
+    | Str(string)
+    | Val('a);
+  external fromStr : string => t('a) = "%identity";
+  external fromVal : 'a => t('a) = "%identity";
+  let encode = v =>
+    switch (v) {
+    | Str(v) => fromStr(v)
+    | Val(v) => fromVal(v)
+    };
+  let encodeOpt = v => Js.Option.map((. b) => encode(b), v);
 };
 
 [@bs.module "react-select"]
@@ -90,7 +105,7 @@ external makeProps :
     ~menuContainerStyle: ReactDOMRe.Style.t=?, /* optional style to apply to the menu container */
     ~menuRenderer: menuRendererProps('a) => ReasonReact.reactElement=?, /* Renders a custom menu with options; accepts the following named parameters */
     ~menuStyle: ReactDOMRe.Style.t=?, /* optional style to apply to the menu */
-    ~multi: Js.boolean=?, /* multi-value input */
+    ~multi: Js.boolean=?,
     ~name: string=?, /* field name, for hidden <input /> tag */
     ~noResultsText: StrOrNode.t=?, /* placeholder displayed when there are no matching search results or a falsy value to hide it */
     ~onBlur: Js.t({..}) => unit=?, /* onBlur handler: function(event) {} */
@@ -115,7 +130,7 @@ external makeProps :
     ~pageSize: int=?, /* number of options to jump when using page up/down keys */
     ~placeholder: StrOrNode.t=?, /* field placeholder, displayed when there's no value */
     ~required: Js.boolean=?, /* applies HTML5 required attribute when needed */
-    ~resetValue: string=?,
+    ~resetValue: Option.t('a)=?,
     /* value to set when the control is cleared */
     ~rtl: Js.boolean=?, /* use react-select in right-to-left direction */
     ~scrollMenuIntoView: Js.boolean=?, /* whether the viewport will shift to display the entire menu when engaged */
@@ -126,7 +141,7 @@ external makeProps :
     ~tabIndex: StrOrInt.t=?, /* tabIndex of the control */
     ~tabSelectsValue: Js.boolean=?, /* whether to select the currently focused value when the [tab] key is pressed */
     ~trimFilter: Js.boolean=?, /* whether to trim whitespace from the filter value */
-    ~value: string=?,
+    ~value: Option.t('a)=?,
     /* initial field value */
     ~valueComponent: ReasonReact.reactClass=?, /* function which returns a custom way to render/manage the value selected <CustomValue /> */
     ~valueKey: string=?, /* the option property to use for the value */
@@ -280,7 +295,7 @@ let make =
         ~pageSize?,
         ~placeholder=?placeholder |> StrOrNode.encodeOpt,
         ~required=?required |> optBoolToOptBoolean,
-        ~resetValue?,
+        ~resetValue=?resetValue |> Option.encodeOpt,
         ~rtl=?rtl |> optBoolToOptBoolean,
         ~scrollMenuIntoView=?scrollMenuIntoView |> optBoolToOptBoolean,
         ~searchable=?searchable |> optBoolToOptBoolean,
@@ -290,7 +305,7 @@ let make =
         ~tabIndex=?tabIndex |> StrOrInt.encodeOpt,
         ~tabSelectsValue=?tabSelectsValue |> optBoolToOptBoolean,
         ~trimFilter=?trimFilter |> optBoolToOptBoolean,
-        ~value?,
+        ~value=?value |> Option.encodeOpt,
         ~valueComponent?,
         ~valueKey?,
         ~valueRenderer?,

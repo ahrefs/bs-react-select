@@ -18,23 +18,27 @@ let make = _children => {
     switch (action) {
     | Change(item) => ReasonReact.Update({selectedItem: Some(item)})
     },
-  render: self => {
-    let value =
-      switch (self.state.selectedItem) {
-      | Some(item) => item##value
-      | None => ""
-      };
+  render: self =>
     <div>
       (ReasonReact.stringToElement("APP"))
       <RS
+        value=?(
+          Js.Option.map(
+            (. b) => RS.Option.(Val(b)),
+            self.state.selectedItem,
+          )
+        )
         name="form-field-name"
-        value
-        onChange=(newItem => self.send(Change(newItem)))
+        onChange=(
+          newItem => {
+            Js.log(newItem);
+            self.send(Change(newItem));
+          }
+        )
         arrowRenderer=(
           (_) => <div> (ReasonReact.stringToElement("+")) </div>
         )
         placeholder=(Str("Select something.."))
-        resetValue="three"
         options=[|
           {"value": "one", "label": "One"},
           {"value": "two", "label": "Two"},
@@ -42,6 +46,5 @@ let make = _children => {
           {"value": "four", "label": "Four"},
         |]
       />
-    </div>;
-  },
+    </div>,
 };
