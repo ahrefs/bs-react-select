@@ -34,7 +34,7 @@ To include styles
 * [ ] `aria-describedby` / `aria-label` / `aria-labelledby` SpecialCreationFunction doesn't allow to change prop name, hopefully this will be possible in the next bucklescript releases
 * [x] `resetValue` / `value` - string | 'a OR string | array('a)
 * [x] `filterOptions` - bool | func
-* [ ] Separate SelectMulti
+* [x] Separate SelectMulti
 
 ## Usage
 
