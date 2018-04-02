@@ -63,6 +63,22 @@ module Option = {
   let encodeOpt = v => Js.Option.map((. b) => encode(b), v);
 };
 
+module FilterOptions = {
+  type t('a);
+  type sortFunc('a) = (~options: array('a), ~filter: string) => array('a);
+  type arg('a) =
+    | Bool(bool)
+    | Func(sortFunc('a));
+  external fromBoolean : Js.boolean => t('a) = "%identity";
+  external fromFunc : sortFunc('a) => t('a) = "%identity";
+  let encode = v =>
+    switch (v) {
+    | Bool(v) => fromBoolean(v |> Js.Boolean.to_js_boolean)
+    | Func(v) => fromFunc(v)
+    };
+  let encodeOpt = v => Js.Option.map((. b) => encode(b), v);
+};
+
 [@bs.module "react-select"]
 external select : ReasonReact.reactClass = "default";
 
@@ -88,7 +104,7 @@ external makeProps :
     ~disabled: Js.boolean=?, /* whether the Select is disabled or not */
     ~escapeClearsValue: Js.boolean=?, /* whether escape clears the value when the menu is closed */
     ~filterOption: ('a, string) => Js.boolean=?, /* method to filter a single option (option, filterString) => boolean */
-    /* ~filterOptions=?, */
+    ~filterOptions: FilterOptions.t('a)=?,
     /* boolean to enable default filtering or function to filter the options array */
     ~id: string=?, /* html id to set on the input element for accessibility or tests */
     ~ignoreAccents: Js.boolean=?, /* whether to strip accents when filtering */
@@ -173,7 +189,7 @@ let make =
       ~disabled=?,
       ~escapeClearsValue=?,
       ~filterOption=?,
-      /* ~filterOptions=?, */
+      ~filterOptions=?,
       ~id=?,
       ~ignoreAccents=?,
       ~ignoreCase=?,
@@ -254,7 +270,7 @@ let make =
         ~disabled=?disabled |> optBoolToOptBoolean,
         ~escapeClearsValue=?escapeClearsValue |> optBoolToOptBoolean,
         ~filterOption?,
-        /* ~filterOptions?, */
+        ~filterOptions=?filterOptions |> FilterOptions.encodeOpt,
         ~id?,
         ~ignoreAccents=?ignoreAccents |> optBoolToOptBoolean,
         ~ignoreCase=?ignoreCase |> optBoolToOptBoolean,
