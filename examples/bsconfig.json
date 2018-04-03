@@ -1,5 +1,6 @@
 {
   "name": "bs-react-select-examples",
+  "namespace": true,
   "sources": ["src"],
   "bs-dependencies": ["reason-react", "bs-jest", "bs-react-select"],
   "reason": {
