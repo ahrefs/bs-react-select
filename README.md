@@ -53,6 +53,6 @@ $ npm start
 ## Select vs SelectMulti
 
 * Option.arg - `Val` vs `Arr`
-* onChange - `'a` vs `array('a)`
+* onChange - `option('a)` vs `array('a)`
 * onValueClick - `'a` vs `array('a)`
 * filterOptions - one extra argument `~current: array('a)`

@@ -78,7 +78,7 @@ external makeProps :
     ~noResultsText: StrOrNode.t=?, /* placeholder displayed when there are no matching search results or a falsy value to hide it */
     ~onBlur: Js.t({..}) => unit=?, /* onBlur handler: function(event) {} */
     ~onBlurResetsInput: Js.boolean=?, /* Whether to clear input on blur or not. If set to false, it only works if onCloseResetsInput is also false */
-    ~onChange: 'a => unit=?, /* onChange handler: function(newOption) {} */
+    ~onChange: Js.nullable('a) => unit=?, /* onChange handler: function(newOption) {} */
     ~onClose: unit => unit=?, /* handler for when the menu closes: function () {} */
     ~onCloseResetsInput: Js.boolean=?, /* whether to clear input when closing the menu through the arrow */
     ~onFocus: unit => unit=?, /* onFocus handler: function(event) {} */

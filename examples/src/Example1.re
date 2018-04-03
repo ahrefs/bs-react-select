@@ -7,7 +7,7 @@ type item = {
 };
 
 type action =
-  | Change(item);
+  | Change(option(item));
 
 type state = {selectedItem: option(item)};
 
@@ -18,7 +18,8 @@ let make = (~options, _children) => {
   initialState: () => {selectedItem: None},
   reducer: (action, _state) =>
     switch (action) {
-    | Change(item) => ReasonReact.Update({selectedItem: Some(item)})
+    | Change(selectedItem) =>
+      ReasonReact.Update({selectedItem: selectedItem})
     },
   render: self =>
     <Select
@@ -29,7 +30,12 @@ let make = (~options, _children) => {
           self.state.selectedItem,
         )
       )
-      onChange=(newItem => self.send(Change(newItem)))
+      onChange=(
+        selectedJs => {
+          let selected = Js.toOption(selectedJs);
+          self.send(Change(selected));
+        }
+      )
       arrowRenderer=((_) => <div> (ReasonReact.stringToElement("+")) </div>)
       filterOptions=(Func((~options, ~filter as _filter) => options))
       placeholder=(Str("Select something.."))

@@ -24,6 +24,6 @@ let make = (~options, _children) => {
     <SelectMulti
       options
       value=(SelectMulti.Option.Arr(self.state.selectedItem))
-      onChange=(newItem => self.send(Change(newItem)))
+      onChange=(selected => self.send(Change(selected)))
     />,
 };
