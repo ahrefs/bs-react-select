@@ -14,12 +14,12 @@ Feel free to create an issue or PR.
 npm install --save @ahrefs/bs-react-select
 ```
 
-Then add `bs-react-select` to `bs-dependencies` in your `bsconfig.json`:
+Then add `@ahrefs/bs-react-select` to `bs-dependencies` in your `bsconfig.json`:
 
 ```js
 {
   ...
-  "bs-dependencies": ["bs-react-select"]
+  "bs-dependencies": ["@ahrefs/bs-react-select"]
 }
 ```
 

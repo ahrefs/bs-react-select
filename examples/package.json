@@ -17,6 +17,6 @@
   "devDependencies": {
     "bs-jest": "^0.3.2",
     "reason-react": "^0.3.2",
-    "bs-react-select": "file:../"
+    "@ahrefs/bs-react-select": "file:../"
   }
 }

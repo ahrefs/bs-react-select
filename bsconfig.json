@@ -1,5 +1,5 @@
 {
-  "name": "bs-react-select",
+  "name": "@ahrefs/bs-react-select",
   "namespace": true,
   "sources": ["src"],
   "bs-dependencies": ["reason-react"],

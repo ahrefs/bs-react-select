@@ -1,4 +1,4 @@
-open BsReactSelect;
+open AhrefsBsReactSelect;
 
 type item = {
   .
