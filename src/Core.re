@@ -1,12 +1,9 @@
 let fromOpt = Js.Nullable.fromOption;
 
-let optBoolToOptBoolean = v =>
-  Js.Option.map((. b) => Js.Boolean.to_js_boolean(b), v);
-
 type arrowRendererProps = {
   .
   "onMouseDown": unit => unit,
-  "isOpen": Js.boolean,
+  "isOpen": bool,
 };
 
 type menuRendererProps('a) = {

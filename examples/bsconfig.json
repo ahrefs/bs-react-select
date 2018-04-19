@@ -2,7 +2,7 @@
   "name": "@ahrefs/bs-react-select-examples",
   "namespace": true,
   "sources": ["src"],
-  "bs-dependencies": ["reason-react", "bs-jest", "@ahrefs/bs-react-select"],
+  "bs-dependencies": ["reason-react", "@ahrefs/bs-react-select"],
   "reason": {
     "react-jsx": 2
   },
