@@ -4,14 +4,14 @@
 
 ## Status
 
-🚧 Not everything is supported yet. 🚧
+🚧 Not everything is supported yet; Unstable; Doesn't follow semver; 🚧
 
 Feel free to create an issue or PR.
 
-## Installation
+## Installation, [npm](https://www.npmjs.com/package/@ahrefs/bs-react-select)
 
 ```sh
-npm install --save bs-react-select
+npm install --save @ahrefs/bs-react-select
 ```
 
 Then add `bs-react-select` to `bs-dependencies` in your `bsconfig.json`:

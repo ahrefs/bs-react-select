@@ -1,6 +1,6 @@
 {
-  "name": "bs-react-select-examples",
-  "version": "0.1.0",
+  "name": "@ahrefs/bs-react-select-examples",
+  "version": "0.0.1",
   "private": true,
   "dependencies": {
     "react": "^16.2.0",
