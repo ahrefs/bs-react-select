@@ -197,7 +197,12 @@ let make =
       ~valueRenderer=?,
       ~wrapperStyle=?,
       children,
-    ) =>
+    ) => {
+  let handleChange = vJs =>
+    switch (onChange) {
+    | Some(onChange) => onChange(Js.toOption(vJs))
+    | None => ()
+    };
   ReasonReact.wrapJsForReason(
     ~reactClass=select,
     ~props=
@@ -242,7 +247,7 @@ let make =
         ~noResultsText=?noResultsText |> StrOrNode.encodeOpt,
         ~onBlur?,
         ~onBlurResetsInput?,
-        ~onChange?,
+        ~onChange=handleChange,
         ~onClose?,
         ~onCloseResetsInput?,
         ~onFocus?,
@@ -281,3 +286,4 @@ let make =
       ),
     children,
   );
+};
