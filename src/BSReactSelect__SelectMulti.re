@@ -4,15 +4,12 @@ module Option = {
   type t('a);
   type arg('a) =
     | Str(string)
-    | Arr(array('a));
-  external fromStr : string => t('a) = "%identity";
-  external fromVal : 'a => t('a) = "%identity";
-  let encode = v =>
-    switch (v) {
-    | Str(v) => fromStr(v)
-    | Arr(v) => fromVal(v)
-    };
-  let encodeOpt = v => Js.Option.map((. b) => encode(b), v);
+    | Arr('a);
+  let encode: arg('a) => t('a) =
+    fun
+    | Str(v) => Obj.magic(v)
+    | Arr(v) => Obj.magic(v);
+  let encodeOpt = Belt.Option.map(_, encode);
 };
 
 module FilterOptions = {
@@ -21,14 +18,11 @@ module FilterOptions = {
   type arg('a) =
     | Bool(bool)
     | Func(sortFunc('a));
-  external fromBool : bool => t('a) = "%identity";
-  external fromFunc : sortFunc('a) => t('a) = "%identity";
-  let encode = v =>
-    switch (v) {
-    | Bool(v) => fromBool(v)
-    | Func(v) => fromFunc(v)
-    };
-  let encodeOpt = v => Js.Option.map((. b) => encode(b), v);
+  let encode: arg('a) => t('a) =
+    fun
+    | Bool(v) => Obj.magic(v)
+    | Func(v) => Obj.magic(v);
+  let encodeOpt = Belt.Option.map(_, encode);
 };
 
 [@bs.module "react-select"]

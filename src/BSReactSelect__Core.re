@@ -20,14 +20,11 @@ module StrOrNode = {
   type arg =
     | Str(string)
     | Node(ReasonReact.reactElement);
-  external fromStr : string => t = "%identity";
-  external fromNode : ReasonReact.reactElement => t = "%identity";
-  let encode = v =>
-    switch (v) {
-    | Str(v) => fromStr(v)
-    | Node(v) => fromNode(v)
-    };
-  let encodeOpt = v => Js.Option.map((. b) => encode(b), v);
+  let encode: arg => t =
+    fun
+    | Str(v) => Obj.magic(v)
+    | Node(v) => Obj.magic(v);
+  let encodeOpt = Belt.Option.map(_, encode);
 };
 
 module StrOrInt = {
@@ -35,12 +32,9 @@ module StrOrInt = {
   type arg =
     | Str(string)
     | Int(int);
-  external fromStr : string => t = "%identity";
-  external fromInt : int => t = "%identity";
-  let encode = v =>
-    switch (v) {
-    | Str(v) => fromStr(v)
-    | Int(v) => fromInt(v)
-    };
-  let encodeOpt = v => Js.Option.map((. b) => encode(b), v);
+  let encode: arg => t =
+    fun
+    | Str(v) => Obj.magic(v)
+    | Int(v) => Obj.magic(v);
+  let encodeOpt = Belt.Option.map(_, encode);
 };
