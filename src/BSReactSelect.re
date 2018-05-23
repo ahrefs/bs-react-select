@@ -1,3 +1,3 @@
-module Select = BSReactSelect__Select;
+module Select = BsReactSelect__Select;
 
-module SelectMulti = BSReactSelect__SelectMulti;
+module SelectMulti = BsReactSelect__SelectMulti;

@@ -1,4 +1,4 @@
-open BSReactSelect;
+open BsReactSelect;
 
 type item = {
   .

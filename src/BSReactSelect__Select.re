@@ -1,4 +1,4 @@
-open BSReactSelect__Core;
+open BsReactSelect__Core;
 
 module Option = {
   type t('a);
