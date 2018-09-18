@@ -15,9 +15,9 @@ let options = [|
 
 ReactDOMRe.renderToElementWithId(
   <div>
-    <h2> (ReasonReact.stringToElement("Select component")) </h2>
+    <h2> {ReasonReact.string("Select component")} </h2>
     <Example1 options />
-    <h2> (ReasonReact.stringToElement("Multi-select component")) </h2>
+    <h2> {ReasonReact.string("Multi-select component")} </h2>
     <Example2 options />
   </div>,
   "root",
