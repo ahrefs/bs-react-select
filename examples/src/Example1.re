@@ -1,3 +1,4 @@
+open Belt;
 open BsReactSelect;
 
 type item = {
@@ -24,15 +25,11 @@ let make = (~options, _children) => {
   render: self =>
     <Select
       options
-      value=?(
-        Js.Option.map(
-          (. b) => Select.Option.Val(b),
-          self.state.selectedItem,
-        )
-      )
-      onChange=(selected => self.send(Change(selected)))
-      arrowRenderer=((_) => <div> (ReasonReact.stringToElement("+")) </div>)
-      filterOptions=(Func((~options, ~filter as _filter) => options))
-      placeholder=(Str("Select something.."))
+      value=?
+        self.state.selectedItem->Option.map(item => Select.Option.Val(item))
+      onChange={selected => self.send(Change(selected))}
+      arrowRenderer={_ => <div> {ReasonReact.string("+")} </div>}
+      filterOptions={Func((~options, ~filter as _filter) => options)}
+      placeholder={Str("Select something..")}
     />,
 };
