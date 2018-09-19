@@ -1,6 +1,6 @@
 # Reason bindings for react-select
 
-[Reason](https://reasonml.github.io/) bindings for [react-select](https://github.com/JedWatson/react-select).
+[Reason](https://reasonml.github.io/) bindings for [react-select](https://github.com/JedWatson/react-select/tree/v1.x).
 
 ## Status
 
@@ -32,9 +32,10 @@ To include styles
 ## TODO
 
 * [ ] `aria-describedby` / `aria-label` / `aria-labelledby` SpecialCreationFunction doesn't allow to change prop name, hopefully this will be possible in the next bucklescript releases
-* [ ] Annotate [Async props](https://github.com/JedWatson/react-select#async-props)
-* [ ] Annotate [Creatable props](https://github.com/JedWatson/react-select#creatable-properties)
-* [ ] can we reduce boilerplate in `Select.re` and `SelectMulti.re`?
+* [ ] Annotate [Async props](https://github.com/JedWatson/react-select/tree/v1.x#async-options)
+* [ ] Annotate [Creatable props](https://github.com/JedWatson/react-select/tree/v1.x#creatable-properties)
+* [ ] Can we reduce boilerplate in `Select.re` and `SelectMulti.re`?
+* [ ] Upgrade to react-select version 2
 * [x] `resetValue` / `value` - string | 'a OR string | array('a)
 * [x] `filterOptions` - bool | func
 * [x] Separate SelectMulti
