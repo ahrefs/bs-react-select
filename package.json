@@ -1,6 +1,6 @@
 {
   "name": "@ahrefs/bs-react-select",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Reason bindings for react-select",
   "author": "ahrefs",
   "license": "MIT",
@@ -30,11 +30,11 @@
     "bs:setup": "bsb -make-world"
   },
   "dependencies": {
-    "react": "^16.2.0",
-    "react-select": "^1.2.1"
+    "react": "^16.4.2",
+    "react-select": "1.2.1"
   },
   "devDependencies": {
-    "bs-platform": "^3.0.0",
-    "reason-react": "^0.3.4"
+    "bs-platform": "^4.0.5",
+    "reason-react": "^0.5.3"
   }
 }
