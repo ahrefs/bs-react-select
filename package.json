@@ -1,6 +1,6 @@
 {
   "name": "@ahrefs/bs-react-select",
-  "version": "0.0.7",
+  "version": "0.0.6",
   "description": "Reason bindings for react-select",
   "author": "ahrefs",
   "license": "MIT",
