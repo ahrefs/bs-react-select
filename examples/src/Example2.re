@@ -23,7 +23,7 @@ let make = (~options, _children) => {
   render: self =>
     <SelectMulti
       options
-      value=(SelectMulti.Option.Arr(self.state.selectedItem))
-      onChange=(selected => self.send(Change(selected)))
+      value={SelectMulti.Option.Arr(self.state.selectedItem)}
+      onChange={selected => self.send(Change(selected))}
     />,
 };
