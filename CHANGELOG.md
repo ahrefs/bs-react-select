@@ -1,4 +1,4 @@
-## 0.0.8 (Feb 9, 2019)
+## 0.0.9 (Feb 9, 2019)
 
 - fix example
 - upgrade deps
