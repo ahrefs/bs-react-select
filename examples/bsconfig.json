@@ -1,11 +1,23 @@
 {
   "name": "@ahrefs/bs-react-select-examples",
+  "sources": {
+    "dir": "src",
+    "subdirs": true
+  },
+  "package-specs": [
+    {
+      "module": "es6",
+      "in-source": true
+    }
+  ],
+  "suffix": ".bs.js",
   "namespace": true,
-  "sources": ["src"],
-  "bs-dependencies": ["reason-react", "@ahrefs/bs-react-select"],
   "reason": {
     "react-jsx": 2
   },
-  "bsc-flags": ["-bs-super-errors"],
-  "refmt": 3
+  "refmt": 3,
+  "bs-dependencies": [
+    "reason-react",
+    "@ahrefs/bs-react-select"
+  ]
 }

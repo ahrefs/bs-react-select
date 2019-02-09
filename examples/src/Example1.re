@@ -27,7 +27,12 @@ let make = (~options, _children) => {
       options
       value=?
         self.state.selectedItem->Option.map(item => Select.Option.Val(item))
-      onChange={selected => self.send(Change(selected))}
+      onChange={
+        selected => {
+          Js.log("onChange");
+          self.send(Change(selected));
+        }
+      }
       arrowRenderer={_ => <div> {ReasonReact.string("+")} </div>}
       filterOptions={Func((~options, ~filter as _filter) => options)}
       placeholder={Str("Select something..")}
