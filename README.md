@@ -40,16 +40,9 @@ To include styles
 * [x] `filterOptions` - bool | func
 * [x] Separate SelectMulti
 
-## Usage
+## Examples
 
-Please take a look at [examples](https://github.com/ahrefs/bs-react-select/tree/master/examples).
-To run demo:
-
-```sh
-$ cd examples
-$ npm install
-$ npm start
-```
+TODO
 
 ## Select vs SelectMulti
 
