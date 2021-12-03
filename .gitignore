@@ -12,8 +12,11 @@
 # bucklescript
 /lib
 /types
+/_esy
 .merlin
 .bsb.lock
+esy.lock
+esy.json
 
 # misc
 .DS_Store
