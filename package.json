@@ -22,9 +22,9 @@
     "react-select"
   ],
   "scripts": {
-    "prestart": "npm install && bsb -clean-world",
-    "start": "npm run bs:watch",
-    "start:reshowcase": "reshowcase start --entry=examples/Index.bs.js --port=9001",
+    "prestart": "yarn install && bsb -clean-world",
+    "start": "yarn bs:watch",
+    "start:reshowcase": "reshowcase start --entry=examples/Index.bs.js --port=9001 --template=examples/index.html",
     "bs:build": "bsb -make-world",
     "bs:watch": "bsb -make-world -clean-world -w",
     "bs:setup": "bsb -make-world"
@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "bs-platform": "^9.0.2",
+    "concurrently": "^7.0.0",
     "react-dom": "^16.2.0",
     "reshowcase": "^4.4.0"
   }
