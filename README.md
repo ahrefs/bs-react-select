@@ -29,6 +29,13 @@ To include styles
 [%bs.raw {|require('react-select/dist/react-select.css')|}];
 ```
 
+## Contributing/Development
+
+Run `yarn start` for bucklescript compiler watcher.
+Then run `yarn start:reshowcase` which will start on `localhost:9001`.
+
+It would be good to have an example for every component and every prop eventually.
+
 ## TODO
 
 * [ ] `aria-describedby` / `aria-label` / `aria-labelledby` SpecialCreationFunction doesn't allow to change prop name, hopefully this will be possible in the next bucklescript releases
