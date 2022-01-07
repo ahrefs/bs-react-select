@@ -24,6 +24,7 @@
   "scripts": {
     "prestart": "npm install && bsb -clean-world",
     "start": "npm run bs:watch",
+    "start:reshowcase": "reshowcase start --entry=examples/Index.bs.js",
     "bs:build": "bsb -make-world -clean-world",
     "bs:watch": "bsb -make-world -clean-world -w",
     "bs:setup": "bsb -make-world"
@@ -34,6 +35,7 @@
   },
   "devDependencies": {
     "bs-platform": "^9.0.2",
-    "reason-react": "^0.9.1"
+    "reason-react": "^0.9.1",
+    "reshowcase": "^5.1.0"
   }
 }
