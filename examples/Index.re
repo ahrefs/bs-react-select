@@ -11,11 +11,10 @@ demo(({addCategory}) => {
     addDemo("font-size", ({string, int}) =>
       <h1
         style={ReactDOM.Style.make(
-          ~fontSize=// Handles can be strings, ints, floats and booleans
-
+          ~fontSize=
           {
             let size = int("font size", {min: 0, max: 100, initial: 30, step: 1})
-            `${size->Belt.Int.toString}px`
+            Printf.sprintf("%ipx", size)
           },
           (),
         )}>

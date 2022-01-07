@@ -1,9 +1,12 @@
 {
   "name": "@ahrefs/bs-react-select",
-  "sources": {
-    "dir": "src",
-    "subdirs": true
-  },
+  "sources": [
+    "examples",
+    {
+      "dir": "src",
+      "subdirs": true
+    }
+  ],
   "package-specs": [
     {
       "module": "es6",
@@ -17,6 +20,7 @@
   },
   "refmt": 3,
   "bs-dependencies": [
-    "reason-react"
+    "reason-react",
+    "reshowcase"
   ]
 }

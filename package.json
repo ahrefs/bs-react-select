@@ -24,8 +24,8 @@
   "scripts": {
     "prestart": "npm install && bsb -clean-world",
     "start": "npm run bs:watch",
-    "start:reshowcase": "reshowcase start --entry=examples/Index.bs.js",
-    "bs:build": "bsb -make-world -clean-world",
+    "start:reshowcase": "reshowcase start --entry=examples/Index.bs.js --port=9001",
+    "bs:build": "bsb -make-world",
     "bs:watch": "bsb -make-world -clean-world -w",
     "bs:setup": "bsb -make-world"
   },
@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "bs-platform": "^9.0.2",
-    "reason-react": "^0.9.1",
-    "reshowcase": "^5.1.0"
+    "react-dom": "^16.2.0",
+    "reshowcase": "^4.4.0"
   }
 }
