@@ -59,8 +59,8 @@ external make :
   ~isLoading: bool=?, /* whether the Select is loading externally or not (such as options being loaded) */
   ~joinValues: bool=?, /* join multiple values into a single hidden input using the delimiter */
   ~labelKey: string=?, /* the option property to use for the label */
-  ~matchPos: [@bs.string] [ | `any | `start]=?, /* (any, start) match the start or entire string when filtering */
-  ~matchProp: [@bs.string] [ | `any | `label | `value]=?, /* (any, label, value) which option property to filter on */
+  ~matchPos: [ | `any | `start]=?, /* (any, start) match the start or entire string when filtering */
+  ~matchProp: [ | `any | `label | `value]=?, /* (any, label, value) which option property to filter on */
   ~menuBuffer: int=?, /* buffer of px between the base of the dropdown and the viewport to shift if menu doesnt fit in viewport */
   ~menuContainerStyle: ReactDOMRe.Style.t=?, /* optional style to apply to the menu container */
   ~menuRenderer: menuRendererProps('a) => React.element=?, /* Renders a custom menu with options; */
