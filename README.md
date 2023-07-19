@@ -1,3 +1,6 @@
+> **Warning**
+> This repository is no longer maintained, as we don't use it anymore at Ahrefs.
+
 # Reason bindings for react-select
 
 [Reason](https://reasonml.github.io/) bindings for [react-select](https://github.com/JedWatson/react-select/tree/v1.x).
